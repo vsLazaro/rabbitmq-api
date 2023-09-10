@@ -12,7 +12,7 @@ class RabbitMQService
         $connection = new AMQPStreamConnection(env('MQ_HOST'), env('MQ_PORT'), env('MQ_USER'), env('MQ_PASS'), env('MQ_VHOST'));
         $channel = $connection->channel();
         $msg = new AMQPMessage(\json_encode($message));
-        $channel->basic_publish($msg, 'amq.direct');
+        $channel->basic_publish($msg, 'waf_exchange');
         $channel->close();
         $connection->close();
     }

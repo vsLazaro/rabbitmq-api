@@ -12,6 +12,6 @@ class RabbitMQController extends Controller
     {
         $data = $request->all();
         RabbitMQService::publishMessage($data["message"]);
-        return response('', 201);
+        return response(\json_encode($data['message']), 201);
     }
 }

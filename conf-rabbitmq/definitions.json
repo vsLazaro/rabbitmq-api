@@ -1,0 +1,68 @@
+{
+  "vhosts": [
+    {
+      "name": "waf"
+    }
+  ],
+  "queues": [
+    {
+        "name": "waf_queue",
+        "vhost": "waf",
+        "durable": true,
+        "auto_delete": false,
+        "arguments": {
+            "x-dead-letter-exchange": "waf_dead_letter_queue"
+        }
+    }
+  ],
+  "exchanges": [
+    {
+        "name": "waf_dead_letter_queue",
+        "vhost": "waf",
+        "type": "direct",
+        "durable": true,
+        "auto_delete": false,
+        "internal": false,
+        "arguments": {}
+    },
+    {
+      "name": "waf_exchange",
+      "vhost": "waf",
+      "type": "direct",
+      "durable": true,
+      "auto_delete": false,
+      "internal": false,
+      "arguments": {}
+    }
+  ],
+  "bindings": [
+    {
+        "source": "waf_exchange",
+        "vhost": "waf",
+        "destination": "waf_queue",
+        "destination_type": "queue",
+        "routing_key": "",
+        "arguments": {}
+    }
+  ],
+  "users": [
+    {
+      "name": "guest",
+      "password_hash": "BMfxN8drrYcIqXZMr+pWTpDT0nMcOagMduLX0bjr4jwud/pN",
+      "hashing_algorithm": "rabbit_password_hashing_sha256",
+      "tags": [
+        "administrator"
+      ],
+      "limits": {}
+    }
+  ],
+  "permissions": [
+    {
+      "user": "guest",
+      "vhost": "waf",
+      "configure": ".*",
+      "write": ".*",
+      "read": ".*"
+    }
+  ]
+}
