@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\RabbitMQController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -14,9 +15,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/greeting', function () {
-    return 'Hello World';
-});
+Route::post("/send", [RabbitMQController::class, "send"]);
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
